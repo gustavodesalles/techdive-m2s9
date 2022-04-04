@@ -21,7 +21,7 @@ depois clique em "+" > "JBoss/WildFly server" > "Local";
 - Clique em OK duas vezes para fechar a configuração do novo servidor;
 - Certifique-se de que o servidor selecionado em "Application server" seja o WildFly 26.0.1.Final;
 - No final da tela, estará aparecendo um erro dizendo que nenhum artefado foi marcado para colocarmos no servidor. 
-Clique em "Fix", escolha "projeto.war " e clique em "OK" para finalizar a configuração;
+Clique em "Fix", escolha "m2s7.war " e clique em "OK" para finalizar a configuração;
 - Na pasta do servidor, há um arquivo chamado standalone.xml em {diretorioWildFly}/standalone/configuration/standalone.xml. Nesse arquivo, há um datasource representando uma conexão com o banco de dados (mais ou menos na linha 129). 
 O dataSource que vem por padrão se chama ExampleDS e vem configurado para se conectar com um banco H2, mas como queremos configurar um banco PostgreSQL, vamos alterá-lo:
   - Onde há a configuração do dataSource "ExampleDS", vamos alterar conforme o código seguinte:
@@ -47,6 +47,23 @@ O dataSource que vem por padrão se chama ExampleDS e vem configurado para se co
       <default-bindings context-service="java:jboss/ee/concurrency/context/default" datasource="java:jboss/datasources/ProjetoDS" managed-executor-service="java:jboss/ee/concurrency/executor/default" managed-scheduled-executor-service="java:jboss/ee/concurrency/scheduler/default" managed-thread-factory="java:jboss/ee/concurrency/factory/default"/>
   ```
 - Tendo o dataSource configurado, também precisamos configurar o próprio banco de dados. Caso ainda não tenha, baixe e instale o banco PostgreSQL;
+- Agora que já temos quase tudo configurado, precisamos baixar o .jar do PostgreSQL e colocar no WildFly:
+  - Acessar [este link](https://mvnrepository.com/artifact/org.postgresql/postgresql/42.3.3) (obs: se tiver uma versão mais nova, acessá-la);
+  - Dentro do link, há uma linha chamada "Files", e nessa linha há um link escrito "jar". Clique para baixar o JAR do PostgreSQL;
+  - Agora que você já tem o JAR do banco de dados, vá até a pasta do servidor e entre em {pastaDoServidor}/modules/system/layers/base/org/postgresql/main/ e coloque o JAR lá (crie as pastas que não existirem);
+  - Na mesma pasta, crie um arquivo chamado module.xml com o seguinte conteúdo:
+  ```xml
+    <?xml version="1.0" encoding="UTF-8"?>
+    <module xmlns="urn:jboss:module:1.1" name="org.postgresql">
+    <resources>
+    <resource-root path="postgresql-42.3.3.jar"/>
+    </resources>
+    <dependencies>
+    <module name="javax.api"/>
+    <module name="javax.transaction.api"/>
+    </dependencies>
+    </module>
+  ```
 - Após baixar e instalar o servidor de banco de dados, crie um banco de dados chamado "m2s7";
 - Para testar se tudo funcionou corretamente, tente rodar o sistema clicando em "Run" ou "Debug".
 
