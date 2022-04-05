@@ -45,47 +45,56 @@ public class UsuarioBusiness {
         usuarioRepository.flush();
     }
 
+    /*
+        Aqui é o método chamado quando o usuário clica em ENTRAR na tela de login.
+        Ao entrar, primeiramente o sistema verifica se o Subject do Apache Shiro já está autenticado, ou seja, se o
+        usuário já fez login no sistema. Se fez login, joga ele para a home (index.xhtml), senão, valida os campos de
+        e-mail e senha e tenta realizar a autenticação.
+    */
     public LoginDTO login(LoginDTO loginDTO) throws Exception {
-        if (!user.isAuthenticated()) {
-            String errorMsg = validateFields(loginDTO);
+        if (user.isAuthenticated()) {
+            Faces.redirect("/index.xhtml");
+            return null;
+        }
 
-            if (errorMsg == null) {
-                UserAuthenticationToken token = new UserAuthenticationToken(loginDTO);
-                try {
-                    user.login(token);
-                    if (user.isAuthenticated()) {
-                        Faces.redirect("/index.xhtml");
-                    }
-                    return loginDTO;
-                } catch (IncorrectCredentialsException e) {
-                    MessageUtils.returnMessageOnFail("Usuário ou senha incorreta");
-                } catch (Exception e) {
-                    MessageUtils.returnMessageOnFail("Ocorreu um erro ao efetuar o login. Por favor, entre em contato com o suporte");
+        String errorMsg = validateFields(loginDTO);
+
+        if (errorMsg == null) {
+            UserAuthenticationToken token = new UserAuthenticationToken(loginDTO);
+            try {
+                user.login(token);
+                if (user.isAuthenticated()) {
+                    Faces.redirect("/index.xhtml");
                 }
-            } else {
-                MessageUtils.returnMessageOnFail(errorMsg);
+                return loginDTO;
+            } catch (IncorrectCredentialsException e) {
+                MessageUtils.returnMessageOnFail("Usuário ou senha incorreta");
+            } catch (Exception e) {
+                MessageUtils.returnMessageOnFail("Ocorreu um erro ao efetuar o login. Por favor, entre em contato com o suporte");
             }
         } else {
-            Faces.redirect("/index.xhtml");
+            MessageUtils.returnMessageOnFail(errorMsg);
         }
         return loginDTO;
     }
 
     private String validateFields(LoginDTO loginDto) {
         String message = null;
-        if (StringUtils.isBlank(loginDto.getEmail()) && StringUtils.isBlank(loginDto.getSenha()))
+        if (StringUtils.isBlank(loginDto.getEmail()) && StringUtils.isBlank(loginDto.getSenha())) {
             message = "Por favor, preencha os campos";
-        else if (StringUtils.isBlank(loginDto.getEmail()))
+        } else if (StringUtils.isBlank(loginDto.getEmail())) {
             message = "E-mail não informado";
-        else if (StringUtils.isBlank(loginDto.getSenha()))
+        } else if (StringUtils.isBlank(loginDto.getSenha())) {
             message = "Senha não informada";
+        }
 
         return message;
     }
 
     public String logout() throws Exception {
-        if (user != null)
+        if (user != null) {
             user.logout();
+        }
         return "/index.xhtml?faces-redirect=true";
     }
 }

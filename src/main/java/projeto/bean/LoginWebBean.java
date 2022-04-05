@@ -1,7 +1,6 @@
 package projeto.bean;
 
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
 import org.omnifaces.cdi.ViewScoped;
 import org.omnifaces.util.Faces;
 import projeto.dto.LoginDTO;
@@ -18,8 +17,6 @@ import java.io.Serializable;
 public class LoginWebBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    private Subject user;
 
     @Inject
     private UsuarioService usuarioService;

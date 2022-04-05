@@ -23,6 +23,15 @@ public class ShiroRealm extends SimpleAccountRealm {
         setName("loginDTO");
     }
 
+    /*
+        Aqui é onde acontece a autenticação em si. Como podemos imaginar pelo @Override, esse é um método chamado pelo Shiro
+        por baixo dos panos, e acontece quando chamamos o "user.login(token)" dentro do método "login" da classe UsuarioBusiness.
+        Aqui, o sistema pega o objeto LoginDTO que passamos em forma de AuthenticationToken (porque é esse objeto que o Shiro usa)
+        e buscamos ele no banco de dados para ver se o usuário informado realmente existe.
+        Se existe (loginDTO.getId() != null), o sistema verifica se a senha informada é a mesma que existe no banco.
+        Se for verdadeiro, o sistema busca as roles no banco de dados e cria um objeto do tipo SimpleAuthenticationInfo,
+        que representa um usuário autenticado (logado) no sistema.
+    */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         UserAuthenticationToken authToken = (UserAuthenticationToken) token;
