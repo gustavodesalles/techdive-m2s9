@@ -11,6 +11,8 @@
 
         <class>projeto.entity.Usuario</class>
         <class>projeto.entity.Role</class>
+        <class>projeto.entity.Turma</class>
+        <class>projeto.entity.Estudante</class>
 
         <properties>
             <property name="hibernate.show_sql" value="false"/>
