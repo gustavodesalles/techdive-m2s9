@@ -73,6 +73,10 @@
         <param-value>604800</param-value> <!-- 1 week -->
     </context-param>
 
+    <session-config>
+        <tracking-mode>COOKIE</tracking-mode>
+    </session-config>
+
     <filter>
         <filter-name>gzipResponseFilter</filter-name>
         <filter-class>org.omnifaces.filter.GzipResponseFilter</filter-class>

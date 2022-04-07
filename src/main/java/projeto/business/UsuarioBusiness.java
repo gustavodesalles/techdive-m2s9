@@ -52,6 +52,7 @@ public class UsuarioBusiness {
         e-mail e senha e tenta realizar a autenticação.
     */
     public LoginDTO login(LoginDTO loginDTO) throws Exception {
+        user = SecurityUtils.getSubject();
         if (user.isAuthenticated()) {
             Faces.redirect("/index.xhtml");
             return null;
@@ -89,12 +90,5 @@ public class UsuarioBusiness {
         }
 
         return message;
-    }
-
-    public String logout() throws Exception {
-        if (user != null) {
-            user.logout();
-        }
-        return "/index.xhtml?faces-redirect=true";
     }
 }

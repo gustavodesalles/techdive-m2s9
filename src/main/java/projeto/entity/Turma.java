@@ -1,8 +1,11 @@
 package projeto.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -12,6 +15,7 @@ public class Turma {
 
     @Id
     @GeneratedValue
+    @Column(name = "id_turma")
     private Long idTurma;
 
     private String nome;
@@ -20,6 +24,7 @@ public class Turma {
 
     private Date dataTermino;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "turma")
     private List<Estudante> estudantes = new ArrayList<>();
 
     public Long getIdTurma() {

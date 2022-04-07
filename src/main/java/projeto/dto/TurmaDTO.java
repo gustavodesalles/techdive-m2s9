@@ -1,5 +1,7 @@
 package projeto.dto;
 
+import projeto.entity.Turma;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,6 +20,16 @@ public class TurmaDTO implements Serializable {
     private Date dataTermino;
 
     private List<EstudanteDTO> estudantes = new ArrayList<>();
+
+    public TurmaDTO() {
+    }
+
+    public TurmaDTO(Turma turma) {
+        this.idTurma = turma.getIdTurma();
+        this.nome = turma.getNome();
+        this.dataInicio = turma.getDataInicio();
+        this.dataTermino = turma.getDataTermino();
+    }
 
     public Long getIdTurma() {
         return idTurma;

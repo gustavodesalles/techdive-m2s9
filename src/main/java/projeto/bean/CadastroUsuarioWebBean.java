@@ -1,16 +1,10 @@
 package projeto.bean;
 
 import org.omnifaces.cdi.ViewScoped;
-import org.omnifaces.util.Faces;
-import projeto.entity.Role;
-import projeto.security.UserAuthenticationToken;
 import projeto.utils.MessageUtils;
 
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
-import java.util.Date;
 
 @ViewScoped
 @Named("cadastroUsuarioWebBean")

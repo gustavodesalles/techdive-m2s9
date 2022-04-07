@@ -1,6 +1,5 @@
 package projeto.service;
 
-
 import org.apache.commons.lang3.StringUtils;
 import projeto.business.UsuarioBusiness;
 import projeto.dto.LoginDTO;
@@ -40,15 +39,7 @@ public class UsuarioService {
         usuarioBusiness.criarUsuarioAdmin();
     }
 
-    public void CREATE() {
-        System.out.println("a");
-    }
-
     public LoginDTO login(LoginDTO login) throws Exception {
         return usuarioBusiness.login(login);
-    }
-
-    public String logout() throws Exception {
-        return usuarioBusiness.logout();
     }
 }

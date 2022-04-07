@@ -2,6 +2,7 @@ package projeto.utils;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import java.util.List;
 
 public class MessageUtils {
 
@@ -15,6 +16,10 @@ public class MessageUtils {
                 "",
                 message)
         );
+    }
+
+    public static void returnMessageOnFail(List<String> erros) {
+        erros.forEach(MessageUtils::returnMessageOnFail);
     }
 
     public static void returnMessageOnSuccess(String message) {

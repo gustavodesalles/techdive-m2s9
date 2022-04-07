@@ -7,12 +7,6 @@
     <persistence-unit name="projeto-datasource" transaction-type="JTA">
         <jta-data-source>java:jboss/datasources/ProjetoDS</jta-data-source>
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <exclude-unlisted-classes>true</exclude-unlisted-classes>
-
-        <class>projeto.entity.Usuario</class>
-        <class>projeto.entity.Role</class>
-        <class>projeto.entity.Turma</class>
-        <class>projeto.entity.Estudante</class>
 
         <properties>
             <property name="hibernate.show_sql" value="false"/>

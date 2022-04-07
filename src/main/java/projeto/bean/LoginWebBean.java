@@ -1,6 +1,7 @@
 package projeto.bean;
 
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.omnifaces.cdi.ViewScoped;
 import org.omnifaces.util.Faces;
 import projeto.dto.LoginDTO;
@@ -42,7 +43,11 @@ public class LoginWebBean implements Serializable {
 
     public String logout() {
         try {
-            return usuarioService.logout();
+            Subject user = SecurityUtils.getSubject();
+            if (user != null) {
+                user.logout();
+            }
+            return "/index.xhtml?faces-redirect=true";
         } catch (Exception e) {
             e.printStackTrace();
             MessageUtils.returnMessageOnFail("Ocorreu um erro no logout.");
