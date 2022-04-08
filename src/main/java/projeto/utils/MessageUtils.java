@@ -29,6 +29,11 @@ public class MessageUtils {
                 message)
         );
     }
+
+    public static void returnGlobalMessageOnFail(List<String> erros) {
+        erros.forEach(MessageUtils::returnGlobalMessageOnFail);
+    }
+
     public static void returnGlobalMessageOnFail(String message) {
         FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
@@ -45,5 +50,9 @@ public class MessageUtils {
                 "",
                 message)
         );
+    }
+
+    public static void limparMensagens() {
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().clear();
     }
 }

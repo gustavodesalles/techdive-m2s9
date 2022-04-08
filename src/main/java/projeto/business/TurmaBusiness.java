@@ -39,6 +39,7 @@ public class TurmaBusiness {
             turmaRepository.merge(turma);
         } else {
             turmaRepository.persist(turma);
+            turmaDTO.setIdTurma(turma.getIdTurma());
         }
     }
 

@@ -5,6 +5,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xml:lang="en"
       lang="en">
 
@@ -15,8 +16,11 @@
 
 <h:body style="margin: 0 !important;">
     <ui:include src="template/_navbar.xhtml"/>
+    <f:metadata>
+        <f:viewAction action="#{estudanteCadastroWebBean.inicializar()}"/>
+    </f:metadata>
 
-    <h:form id="cadastroTurma">
+    <h:form id="cadastroEstudante">
         <p:messages id="messages" showDetail="true" showIcon="false" showSummary="false" closable="true">
             <p:autoUpdate/>
         </p:messages>
@@ -24,26 +28,38 @@
         <div class="grid">
             <div class="col-12">
                 <div class="col-2">
-                    <p:outputLabel for="nomeTurma" value="Nome da turma: "/>
-                    <p:inputText id="nomeTurma" value="#{turmaCadastroWebBean.turmaDTO.nome}"/>
+                    <p:outputLabel for="nomeEstudante" value="Nome do estudante: "/>
+                    <p:inputText id="nomeEstudante" value="#{estudanteCadastroWebBean.estudanteDTO.nome}"/>
                 </div>
             </div>
 
             <div class="col-12">
                 <div class="col-2">
-                    <p:outputLabel for="dataInicio" value="Data de início: "/>
-                    <p:calendar id="dataInicio"
+                    <p:outputLabel for="dataNascimento" value="Data de nascimento: "/>
+                    <p:calendar id="dataNascimento"
                                 pattern="dd/MM/yyyy"
-                                value="#{turmaCadastroWebBean.turmaDTO.dataInicio}"/>
+                                value="#{estudanteCadastroWebBean.estudanteDTO.dataNascimento}"/>
                 </div>
             </div>
 
             <div class="col-12">
                 <div class="col-2">
-                    <p:outputLabel for="dataTermino" value="Data de término: "/>
-                    <p:calendar id="dataTermino"
-                                pattern="dd/MM/yyyy"
-                                value="#{turmaCadastroWebBean.turmaDTO.dataTermino}"/>
+                    <p:outputLabel for="email" value="E-mail: "/>
+                    <p:inputText id="email" value="#{estudanteCadastroWebBean.estudanteDTO.email}"/>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="col-2">
+                    <p:outputLabel for="turma" value="Turma: "/>
+                    <p:selectOneMenu id="turma" value="#{estudanteCadastroWebBean.estudanteDTO.idTurma}">
+                        <f:selectItem itemLabel="Selecione" itemValue="#{null}"/>
+                        <f:selectItems value="#{estudanteCadastroWebBean.turmas}"
+                                       var="turma"
+                                       itemLabel="#{turma.nome}"
+                                       itemValue="#{turma.idTurma}"
+                        />
+                    </p:selectOneMenu>
                 </div>
             </div>
 
@@ -52,7 +68,7 @@
                     <p:commandButton id="botaoCadastrar"
                                      process="@form"
                                      value="Cadastrar"
-                                     action="#{turmaCadastroWebBean.cadastrar()}"/>
+                                     action="#{estudanteCadastroWebBean.cadastrar()}"/>
                 </div>
             </div>
         </div>

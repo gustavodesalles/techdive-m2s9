@@ -1,5 +1,7 @@
 package projeto.dto;
 
+import projeto.entity.Estudante;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -16,6 +18,17 @@ public class EstudanteDTO implements Serializable {
     private String email;
 
     private Date dataNascimento;
+
+    public EstudanteDTO() {
+    }
+
+    public EstudanteDTO(Estudante estudante) {
+        this.idEstudante = estudante.getIdEstudante();
+        this.idTurma = estudante.getTurma() != null ? estudante.getTurma().getIdTurma() : null;
+        this.nome = estudante.getNome();
+        this.email = estudante.getEmail();
+        this.dataNascimento = estudante.getDataNascimento();
+    }
 
     public Long getIdEstudante() {
         return idEstudante;

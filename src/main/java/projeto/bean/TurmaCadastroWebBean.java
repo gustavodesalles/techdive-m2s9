@@ -2,6 +2,7 @@ package projeto.bean;
 
 import org.omnifaces.cdi.Param;
 import org.omnifaces.cdi.ViewScoped;
+import org.omnifaces.util.Faces;
 import projeto.dto.TurmaDTO;
 import projeto.exception.BusinessException;
 import projeto.service.TurmaService;
@@ -26,13 +27,14 @@ public class TurmaCadastroWebBean implements Serializable {
 
     private TurmaDTO turmaDTO = new TurmaDTO();
 
-    @PostConstruct
-    public void init() {
+    public void inicializar() {
         if (idTurma != null) {
             try {
                 turmaDTO = turmaService.consultarDadosTurma(idTurma);
+                MessageUtils.limparMensagens();
             } catch (BusinessException e) {
-                MessageUtils.returnMessageOnFail(e.getErros());
+                MessageUtils.returnGlobalMessageOnFail(e.getErros());
+                Faces.redirect("/turma.xhtml");
             }
         }
     }
@@ -40,7 +42,12 @@ public class TurmaCadastroWebBean implements Serializable {
     public void cadastrar() {
         try {
             turmaService.cadastrar(turmaDTO);
-            MessageUtils.returnMessageOnSuccess("Salvo com sucesso!");
+            if (idTurma == null) {
+                MessageUtils.returnGlobalMessageOnSuccess("Salvo com sucesso!");
+                Faces.redirect("/turma.xhtml?idTurma=" + turmaDTO.getIdTurma());
+            } else {
+                MessageUtils.returnMessageOnSuccess("Salvo com sucesso!");
+            }
         } catch (BusinessException e) {
             MessageUtils.returnMessageOnFail(e.getErros());
         } catch (Exception e) {

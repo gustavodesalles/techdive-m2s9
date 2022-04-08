@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TurmaDTO implements Serializable {
 
@@ -24,11 +25,17 @@ public class TurmaDTO implements Serializable {
     public TurmaDTO() {
     }
 
+    public TurmaDTO(Long idTurma, String nome) {
+        this.idTurma = idTurma;
+        this.nome = nome;
+    }
+
     public TurmaDTO(Turma turma) {
         this.idTurma = turma.getIdTurma();
         this.nome = turma.getNome();
         this.dataInicio = turma.getDataInicio();
         this.dataTermino = turma.getDataTermino();
+        this.estudantes = turma.getEstudantes().stream().map(EstudanteDTO::new).collect(Collectors.toList());
     }
 
     public Long getIdTurma() {

@@ -1,17 +1,19 @@
 package projeto.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Entity
+@NamedQuery(
+        name = Turma.GET_TURMASDTO,
+        query = "SELECT new projeto.dto.TurmaDTO(t.idTurma, t.nome) " +
+                "FROM Turma t " +
+                "ORDER BY t.idTurma")
 public class Turma {
+
+    public static final String GET_TURMASDTO = "GET_TURMASDTO";
 
     @Id
     @GeneratedValue
