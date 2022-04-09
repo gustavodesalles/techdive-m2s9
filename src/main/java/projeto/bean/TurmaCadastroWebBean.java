@@ -3,6 +3,7 @@ package projeto.bean;
 import org.omnifaces.cdi.Param;
 import org.omnifaces.cdi.ViewScoped;
 import org.omnifaces.util.Faces;
+import projeto.dto.EstudanteDTO;
 import projeto.dto.TurmaDTO;
 import projeto.exception.BusinessException;
 import projeto.service.TurmaService;
@@ -12,6 +13,9 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 @ViewScoped
 @Named("turmaCadastroWebBean")
@@ -27,6 +31,10 @@ public class TurmaCadastroWebBean implements Serializable {
 
     private TurmaDTO turmaDTO = new TurmaDTO();
 
+    private EstudanteDTO estudanteSelecionado;
+
+    private List<EstudanteDTO> estudantesSemTurmas = new ArrayList<>();
+
     public void inicializar() {
         if (idTurma != null) {
             try {
@@ -37,6 +45,7 @@ public class TurmaCadastroWebBean implements Serializable {
                 Faces.redirect("/turma.xhtml");
             }
         }
+        estudantesSemTurmas = turmaService.consultarEstudantesSemTurmas();
     }
 
     public void cadastrar() {
@@ -55,11 +64,42 @@ public class TurmaCadastroWebBean implements Serializable {
         }
     }
 
+    public void adicionarEstudante() {
+        turmaDTO.getEstudantes().add(estudanteSelecionado);
+        turmaDTO.getEstudantes().sort(Comparator.comparing(EstudanteDTO::getNome));
+        getEstudantesSemTurmas().remove(estudanteSelecionado);
+        estudanteSelecionado = null;
+    }
+
+    public boolean desabilitarAdicionarEstudante() {
+        return (estudanteSelecionado == null);
+    }
+
+    public void removerEstudante(EstudanteDTO estudanteDTO) {
+        turmaDTO.getEstudantes().remove(estudanteDTO);
+    }
+
     public TurmaDTO getTurmaDTO() {
         return turmaDTO;
     }
 
     public void setTurmaDTO(TurmaDTO turmaDTO) {
         this.turmaDTO = turmaDTO;
+    }
+
+    public EstudanteDTO getEstudanteSelecionado() {
+        return estudanteSelecionado;
+    }
+
+    public void setEstudanteSelecionado(EstudanteDTO estudanteSelecionado) {
+        this.estudanteSelecionado = estudanteSelecionado;
+    }
+
+    public List<EstudanteDTO> getEstudantesSemTurmas() {
+        return estudantesSemTurmas;
+    }
+
+    public void setEstudantesSemTurmas(List<EstudanteDTO> estudantesSemTurmas) {
+        this.estudantesSemTurmas = estudantesSemTurmas;
     }
 }

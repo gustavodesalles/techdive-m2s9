@@ -4,6 +4,7 @@ import projeto.entity.Turma;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,7 +36,11 @@ public class TurmaDTO implements Serializable {
         this.nome = turma.getNome();
         this.dataInicio = turma.getDataInicio();
         this.dataTermino = turma.getDataTermino();
-        this.estudantes = turma.getEstudantes().stream().map(EstudanteDTO::new).collect(Collectors.toList());
+        this.estudantes = turma.getEstudantes()
+                .stream()
+                .map(EstudanteDTO::new)
+                .sorted(Comparator.comparing(EstudanteDTO::getNome))
+                .collect(Collectors.toList());
     }
 
     public Long getIdTurma() {

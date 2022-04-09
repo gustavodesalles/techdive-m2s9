@@ -1,7 +1,9 @@
 package projeto.business;
 
 import org.apache.commons.lang3.StringUtils;
+import projeto.dto.EstudanteDTO;
 import projeto.dto.TurmaDTO;
+import projeto.entity.Estudante;
 import projeto.entity.Turma;
 import projeto.exception.BusinessException;
 import projeto.repository.TurmaRepository;
@@ -34,6 +36,26 @@ public class TurmaBusiness {
         turma.setNome(turmaDTO.getNome());
         turma.setDataInicio(turmaDTO.getDataInicio());
         turma.setDataTermino(turmaDTO.getDataTermino());
+
+        for (Estudante estudante : turma.getEstudantes()) {
+            if (turmaDTO.getEstudantes()
+                    .stream()
+                    .noneMatch(estudanteDTO -> estudanteDTO.getIdEstudante().equals(estudante.getIdEstudante()))) {
+                estudante.setTurma(null);
+            }
+        }
+
+        for (EstudanteDTO estudanteDTO : turmaDTO.getEstudantes()) {
+            if (turma.getEstudantes()
+                    .stream()
+                    .noneMatch(estudante -> estudante.getIdEstudante().equals(estudanteDTO.getIdEstudante()))) {
+                Estudante estudante = turmaRepository.find(Estudante.class, estudanteDTO.getIdEstudante());
+                if (estudante == null) {
+                    throw new BusinessException("Estudante não encontrado.");
+                }
+                estudante.setTurma(turma);
+            }
+        }
 
         if (turma.getIdTurma() != null) {
             turmaRepository.merge(turma);

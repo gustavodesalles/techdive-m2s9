@@ -65,8 +65,32 @@
             </p:tab>
             <p:tab title="Estudantes">
                 <div class="grid">
+
+                    <p:outputLabel for="listaEstudantes" value="Estudantes: "/>
+                    <p:selectOneMenu id="listaEstudantes"
+                                     converter="omnifaces.SelectItemsConverter"
+                                     value="#{turmaCadastroWebBean.estudanteSelecionado}">
+                        <f:selectItem itemLabel="Selecione" itemValue="#{null}"/>
+                        <f:selectItems value="#{turmaCadastroWebBean.estudantesSemTurmas}"
+                                       var="estudante"
+                                       itemLabel="#{estudante.nome}"
+                                       itemValue="#{estudante}"/>
+                        <p:ajax process="@this"
+                                update="adicionarEstudante"/>
+                    </p:selectOneMenu>
+
+                    <p:commandButton id="adicionarEstudante"
+                                     value="adicionar"
+                                     process="@this"
+                                     disabled="#{turmaCadastroWebBean.desabilitarAdicionarEstudante()}"
+                                     action="#{turmaCadastroWebBean.adicionarEstudante()}"
+                                     update="tabelaEstudantes, adicionarEstudante, listaEstudantes"/>
+
                     <div class="col-12">
-                        <p:dataTable value="#{turmaCadastroWebBean.turmaDTO.estudantes}" var="estudante">
+                        <p:dataTable id="tabelaEstudantes"
+                                     value="#{turmaCadastroWebBean.turmaDTO.estudantes}"
+                                     var="estudante"
+                                     emptyMessage="Nenhum estudante cadastrado na turma.">
                             <f:facet name="header">
                                 Estudantes
                             </f:facet>
@@ -84,9 +108,22 @@
                                 <h:outputText value="#{estudante.email}"/>
                             </p:column>
                             <p:column headerText="Ação">
-                                <h:outputText value="#{null}"/>
+                                <p:commandButton id="removerEstudante"
+                                                 title="Excluir estudante"
+                                                 action="#{turmaCadastroWebBean.removerEstudante(estudante)}"
+                                                 update="tabelaEstudantes"
+                                                 styleClass="ui-button-danger"
+                                                 icon="pi pi-times"
+                                                    process="@this">
+                                    <p:confirm message="Tem certeza que deseja remover o estudante?"/>
+                                </p:commandButton>
                             </p:column>
                         </p:dataTable>
+
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+                            <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+                            <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" />
+                        </p:confirmDialog>
                     </div>
                 </div>
             </p:tab>

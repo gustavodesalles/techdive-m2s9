@@ -1,6 +1,7 @@
 package projeto.service;
 
 import projeto.business.TurmaBusiness;
+import projeto.dto.EstudanteDTO;
 import projeto.dto.TurmaDTO;
 import projeto.exception.BusinessException;
 import projeto.repository.TurmaRepository;
@@ -28,5 +29,9 @@ public class TurmaService {
 
     public List<TurmaDTO> consultarTurmas() {
         return turmaRepository.consultarTurmas();
+    }
+
+    public List<EstudanteDTO> consultarEstudantesSemTurmas() {
+        return turmaRepository.consultarEstudantesSemTurmas();
     }
 }
