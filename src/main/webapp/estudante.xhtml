@@ -64,6 +64,24 @@
             </div>
 
             <div class="col-12">
+                <div class="col-2">
+                    <p:fieldset id="endereco" legend="Endereço">
+                        <p:outputLabel for="endereco-rua" value="Rua: "/>
+                        <p:inputText id="endereco-rua" value="#{estudanteCadastroWebBean.estudanteDTO.endereco.rua}">
+                            <p:ajax process="@this"/>
+                        </p:inputText>
+
+                        <p:outputLabel for="endereco-numero" value="Número: "/>
+                        <p:inputText id="endereco-numero"
+                                       value="#{estudanteCadastroWebBean.estudanteDTO.endereco.numero}">
+                                <p:ajax process="@this"/>
+                        </p:inputText>
+
+                    </p:fieldset>
+                </div>
+            </div>
+
+            <div class="col-12">
                 <div class="col-3 m-1">
                     <p:commandButton id="botaoCadastrar"
                                      process="@form"

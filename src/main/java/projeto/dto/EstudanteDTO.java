@@ -1,5 +1,6 @@
 package projeto.dto;
 
+import projeto.entity.Endereco;
 import projeto.entity.Estudante;
 
 import java.io.Serializable;
@@ -10,6 +11,8 @@ public class EstudanteDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long idEstudante;
+
+    private Long idEndereco;
 
     private Long idTurma;
 
@@ -30,6 +33,7 @@ public class EstudanteDTO implements Serializable {
     public EstudanteDTO(Estudante estudante) {
         this.idEstudante = estudante.getIdEstudante();
         this.idTurma = estudante.getTurma() != null ? estudante.getTurma().getIdTurma() : null;
+        this.idEndereco = estudante.getEndereco() != null ? estudante.getEndereco().getIdEndereco() : null;
         this.nome = estudante.getNome();
         this.email = estudante.getEmail();
         this.dataNascimento = estudante.getDataNascimento();
@@ -49,6 +53,14 @@ public class EstudanteDTO implements Serializable {
 
     public void setIdTurma(Long idTurma) {
         this.idTurma = idTurma;
+    }
+
+    public Long getIdEndereco() {
+        return idEndereco;
+    }
+
+    public void setIdEndereco(Long idEndereco) {
+        this.idEndereco = idEndereco;
     }
 
     public String getNome() {

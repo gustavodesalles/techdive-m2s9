@@ -6,6 +6,7 @@ import org.omnifaces.util.Faces;
 import projeto.dto.EstudanteDTO;
 import projeto.dto.TurmaDTO;
 import projeto.exception.BusinessException;
+import projeto.service.EnderecoService;
 import projeto.service.EstudanteService;
 import projeto.service.TurmaService;
 import projeto.utils.MessageUtils;
@@ -33,6 +34,9 @@ public class EstudanteCadastroWebBean implements Serializable {
 
     @Inject
     private TurmaService turmaService;
+
+    @Inject
+    private EnderecoService enderecoService;
 
     public void inicializar() {
         if (idEstudante != null) {
