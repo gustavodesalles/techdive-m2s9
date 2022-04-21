@@ -2,6 +2,7 @@ package projeto.business;
 
 import org.apache.commons.lang3.StringUtils;
 import projeto.dto.EstudanteDTO;
+import projeto.dto.FiltroTurmaDTO;
 import projeto.dto.TurmaDTO;
 import projeto.entity.Estudante;
 import projeto.entity.Turma;
@@ -92,5 +93,20 @@ public class TurmaBusiness {
         }
 
         return new TurmaDTO(turma);
+    }
+
+    public List<TurmaDTO> buscar(FiltroTurmaDTO filtro) throws BusinessException {
+        validarCamposNulos(filtro);
+        return turmaRepository.buscar(filtro);
+    }
+
+    private void validarCamposNulos(FiltroTurmaDTO filtro) throws BusinessException {
+        if (filtro.getIdTurma() == null
+                && StringUtils.isBlank(filtro.getNome())
+                && filtro.getIdEstudante() == null
+                && filtro.getDataInicio() == null
+                && filtro.getDataTermino() == null) {
+            throw new BusinessException("Insira ao menos um filtro para realizar a busca.");
+        }
     }
 }

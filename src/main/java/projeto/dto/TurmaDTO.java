@@ -23,6 +23,10 @@ public class TurmaDTO implements Serializable {
 
     private List<EstudanteDTO> estudantes = new ArrayList<>();
 
+    private int quantidadeEstudantes;
+
+    private String status;
+
     public TurmaDTO() {
     }
 
@@ -41,6 +45,16 @@ public class TurmaDTO implements Serializable {
                 .map(EstudanteDTO::new)
                 .sorted(Comparator.comparing(EstudanteDTO::getNome))
                 .collect(Collectors.toList());
+        this.quantidadeEstudantes = this.estudantes.size();
+
+        Date dataAtual = new Date();
+        if (dataAtual.after(dataInicio) && dataAtual.before(dataTermino)) {
+            this.status = "Em andamento";
+        } else if (dataAtual.before(dataInicio)) {
+            this.status = "Aguardando início";
+        } else if (dataAtual.after(dataTermino)) {
+            this.status = "Encerrada";
+        }
     }
 
     public Long getIdTurma() {
@@ -81,5 +95,21 @@ public class TurmaDTO implements Serializable {
 
     public void setEstudantes(List<EstudanteDTO> estudantes) {
         this.estudantes = estudantes;
+    }
+
+    public int getQuantidadeEstudantes() {
+        return quantidadeEstudantes;
+    }
+
+    public void setQuantidadeEstudantes(int quantidadeEstudantes) {
+        this.quantidadeEstudantes = quantidadeEstudantes;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

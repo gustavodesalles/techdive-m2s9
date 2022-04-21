@@ -22,6 +22,11 @@ public class EstudanteDTO implements Serializable {
     public EstudanteDTO() {
     }
 
+    public EstudanteDTO(Long idEstudante, String nome) {
+        this.idEstudante = idEstudante;
+        this.nome = nome;
+    }
+
     public EstudanteDTO(Estudante estudante) {
         this.idEstudante = estudante.getIdEstudante();
         this.idTurma = estudante.getTurma() != null ? estudante.getTurma().getIdTurma() : null;
