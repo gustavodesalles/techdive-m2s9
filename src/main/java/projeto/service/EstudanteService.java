@@ -2,6 +2,7 @@ package projeto.service;
 
 import projeto.business.EstudanteBusiness;
 import projeto.dto.EstudanteDTO;
+import projeto.dto.FiltroEstudanteDTO;
 import projeto.exception.BusinessException;
 import projeto.repository.EstudanteRepository;
 
@@ -28,5 +29,9 @@ public class EstudanteService {
 
     public List<EstudanteDTO> consultarEstudantePorNomeOuMatricula(String query) {
         return estudanteRepository.consultarEstudantePorNomeOuMatricula(query);
+    }
+
+    public List<EstudanteDTO> buscar(FiltroEstudanteDTO filtro) throws BusinessException {
+        return estudanteBusiness.buscar(filtro);
     }
 }

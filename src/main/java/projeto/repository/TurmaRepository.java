@@ -25,6 +25,22 @@ public class TurmaRepository extends GenericRepository {
                 .getResultList();
     }
 
+    public List<TurmaDTO> consultarTurmaPorNomeOuMatricula(String query) {
+        query = "%" + query + "%";
+        query = query.toLowerCase();
+
+        try {
+            return entityManager.createQuery("SELECT new projeto.dto.TurmaDTO(t.idTurma, t.nome) " +
+                            "FROM Turma t " +
+                            "WHERE CAST(t.idTurma AS string) = :query " +
+                            "OR LOWER(t.nome) LIKE :query", TurmaDTO.class)
+                    .setParameter("query", query)
+                    .getResultList();
+        } catch (NoResultException e) {
+            return new ArrayList<>();
+        }
+    }
+
     public List<TurmaDTO> buscar(FiltroTurmaDTO filtro) {
         String hql = montarSqlBuscaTurma(filtro);
         Query query = entityManager.createQuery(hql, TurmaDTO.class);
@@ -44,6 +60,10 @@ public class TurmaRepository extends GenericRepository {
 
         if (filtro.getIdEstudante() != null) {
             query.setParameter("idEstudante", filtro.getIdEstudante());
+        }
+
+        if (filtro.getIdEscola() != null) {
+            query.setParameter("idEscola", filtro.getIdEscola());
         }
 
         if (!StringUtils.isBlank(filtro.getNome())) {
@@ -70,6 +90,13 @@ public class TurmaRepository extends GenericRepository {
             hql = hql.concat("JOIN t.estudantes e ");
 
             hql = hql.concat(andOrWhere).concat("e.idEstudante = :idEstudante ");
+            andOrWhere = "AND ";
+        }
+
+        if (filtro.getIdEscola() != null) {
+            hql = hql.concat("JOIN t.escola s ");
+
+            hql = hql.concat(andOrWhere).concat("s.idEscola = :idEscola ");
             andOrWhere = "AND ";
         }
 

@@ -2,7 +2,7 @@ package projeto.business;
 
 import org.apache.commons.lang3.StringUtils;
 import projeto.dto.EstudanteDTO;
-import projeto.dto.TurmaDTO;
+import projeto.dto.FiltroEstudanteDTO;
 import projeto.entity.Endereco;
 import projeto.entity.Estudante;
 import projeto.entity.Turma;
@@ -46,13 +46,7 @@ public class EstudanteBusiness {
 
         estudante.setTurma(turma);
 
-        Endereco endereco = estudanteRepository.find(Endereco.class, estudanteDTO.getIdEndereco());
-
-        if (endereco == null) {
-            throw new BusinessException("Endereço não encontrado");
-        }
-
-        estudante.setEndereco(endereco);
+        estudante.setEndereco(new Endereco(estudanteDTO.getEnderecoDTO()));
 
         if (estudante.getIdEstudante() != null) {
             estudanteRepository.merge(estudante);
@@ -77,10 +71,6 @@ public class EstudanteBusiness {
             erros.add("A turma é inválida blablabla.");
         }
 
-        if (estudanteDTO.getIdEndereco() == null) {
-            erros.add("O endereço é inválido whoa.");
-        }
-
         if (StringUtils.isBlank(estudanteDTO.getEmail())) {
             erros.add("O e-mail do estudante é inválido.");
         }
@@ -97,5 +87,20 @@ public class EstudanteBusiness {
         }
 
         return new EstudanteDTO(estudante);
+    }
+
+    public List<EstudanteDTO> buscar(FiltroEstudanteDTO filtro) throws BusinessException {
+        validarCamposNulos(filtro);
+        return estudanteRepository.buscar(filtro);
+    }
+
+    private void validarCamposNulos(FiltroEstudanteDTO filtro) throws BusinessException {
+        if (filtro.getIdTurma() == null
+                && StringUtils.isBlank(filtro.getNome())
+                && filtro.getIdEstudante() == null
+                && filtro.getDataNascimento() == null
+                && StringUtils.isBlank(filtro.getEmail())) {
+            throw new BusinessException("Insira ao menos um filtro para realizar a busca.");
+        }
     }
 }

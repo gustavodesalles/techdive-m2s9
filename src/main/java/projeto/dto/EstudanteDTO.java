@@ -1,6 +1,5 @@
 package projeto.dto;
 
-import projeto.entity.Endereco;
 import projeto.entity.Estudante;
 
 import java.io.Serializable;
@@ -12,7 +11,7 @@ public class EstudanteDTO implements Serializable {
 
     private Long idEstudante;
 
-    private Long idEndereco;
+    private EnderecoDTO enderecoDTO;
 
     private Long idTurma;
 
@@ -23,6 +22,7 @@ public class EstudanteDTO implements Serializable {
     private Date dataNascimento;
 
     public EstudanteDTO() {
+        this.enderecoDTO = new EnderecoDTO();
     }
 
     public EstudanteDTO(Long idEstudante, String nome) {
@@ -33,7 +33,7 @@ public class EstudanteDTO implements Serializable {
     public EstudanteDTO(Estudante estudante) {
         this.idEstudante = estudante.getIdEstudante();
         this.idTurma = estudante.getTurma() != null ? estudante.getTurma().getIdTurma() : null;
-        this.idEndereco = estudante.getEndereco() != null ? estudante.getEndereco().getIdEndereco() : null;
+        this.enderecoDTO = new EnderecoDTO(estudante.getEndereco());
         this.nome = estudante.getNome();
         this.email = estudante.getEmail();
         this.dataNascimento = estudante.getDataNascimento();
@@ -55,12 +55,12 @@ public class EstudanteDTO implements Serializable {
         this.idTurma = idTurma;
     }
 
-    public Long getIdEndereco() {
-        return idEndereco;
+    public EnderecoDTO getEnderecoDTO() {
+        return enderecoDTO;
     }
 
-    public void setIdEndereco(Long idEndereco) {
-        this.idEndereco = idEndereco;
+    public void setEnderecoDTO(EnderecoDTO enderecoDTO) {
+        this.enderecoDTO = enderecoDTO;
     }
 
     public String getNome() {

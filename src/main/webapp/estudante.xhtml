@@ -67,16 +67,45 @@
                 <div class="col-2">
                     <p:fieldset id="endereco" legend="Endereço">
                         <p:outputLabel for="endereco-rua" value="Rua: "/>
-                        <p:inputText id="endereco-rua" value="#{estudanteCadastroWebBean.estudanteDTO.endereco.rua}">
+                        <p:inputText id="endereco-rua" value="#{estudanteCadastroWebBean.estudanteDTO.enderecoDTO.rua}"
+                                     required="true" requiredMessage="#{msg['campo.obrigatorio']}">
                             <p:ajax process="@this"/>
                         </p:inputText>
 
                         <p:outputLabel for="endereco-numero" value="Número: "/>
                         <p:inputText id="endereco-numero"
-                                       value="#{estudanteCadastroWebBean.estudanteDTO.endereco.numero}">
+                                       value="#{estudanteCadastroWebBean.estudanteDTO.enderecoDTO.numero}"
+                                     required="true" requiredMessage="#{msg['campo.obrigatorio']}">
                                 <p:ajax process="@this"/>
                         </p:inputText>
 
+                        <p:outputLabel for="endereco-bairro" value="Bairro: "/>
+                        <p:inputText id="endereco-bairro"
+                                     value="#{estudanteCadastroWebBean.estudanteDTO.enderecoDTO.bairro}"
+                                     required="true" requiredMessage="#{msg['campo.obrigatorio']}">
+                            <p:ajax process="@this"/>
+                        </p:inputText>
+
+                        <p:outputLabel for="endereco-cidade" value="Cidade: "/>
+                        <p:inputText id="endereco-cidade"
+                                     value="#{estudanteCadastroWebBean.estudanteDTO.enderecoDTO.cidade}"
+                                     required="true" requiredMessage="#{msg['campo.obrigatorio']}">
+                            <p:ajax process="@this"/>
+                        </p:inputText>
+
+                        <p:outputLabel for="endereco-estado" value="Estado: "/>
+                        <p:inputText id="endereco-estado"
+                                     value="#{estudanteCadastroWebBean.estudanteDTO.enderecoDTO.estado}"
+                                     required="true" requiredMessage="#{msg['campo.obrigatorio']}">
+                            <p:ajax process="@this"/>
+                        </p:inputText>
+
+                        <p:outputLabel for="endereco-pais" value="País: "/>
+                        <p:inputText id="endereco-pais"
+                                     value="#{estudanteCadastroWebBean.estudanteDTO.enderecoDTO.pais}"
+                                     required="true" requiredMessage="#{msg['campo.obrigatorio']}">
+                            <p:ajax process="@this"/>
+                        </p:inputText>
                     </p:fieldset>
                 </div>
             </div>

@@ -36,6 +36,10 @@ public class TurmaService {
         return turmaRepository.consultarEstudantesSemTurmas();
     }
 
+    public List<TurmaDTO> consultarTurmaPorNomeOuMatricula(String query) {
+        return turmaRepository.consultarTurmaPorNomeOuMatricula(query);
+    }
+
     public List<TurmaDTO> buscar(FiltroTurmaDTO filtro) throws BusinessException {
         return turmaBusiness.buscar(filtro);
     }

@@ -1,28 +1,21 @@
-package projeto.entity;
+package projeto.dto;
 
-import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
-@Entity
-public class Estudante {
+public class FiltroEstudanteDTO implements Serializable {
 
-    @Id
-    @GeneratedValue
-    @Column(name = "id_estudante")
+    private static final long serialVersionUID = 1L;
+
     private Long idEstudante;
 
-    @Column(name = "nome")
     private String nome;
 
     private String email;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Endereco endereco;
-
     private Date dataNascimento;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Turma turma;
+    private Long idTurma;
 
     public Long getIdEstudante() {
         return idEstudante;
@@ -30,14 +23,6 @@ public class Estudante {
 
     public void setIdEstudante(Long idEstudante) {
         this.idEstudante = idEstudante;
-    }
-
-    public Turma getTurma() {
-        return turma;
-    }
-
-    public void setTurma(Turma turma) {
-        this.turma = turma;
     }
 
     public String getNome() {
@@ -56,19 +41,19 @@ public class Estudante {
         this.email = email;
     }
 
-    public Endereco getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
-    }
-
     public Date getDataNascimento() {
         return dataNascimento;
     }
 
     public void setDataNascimento(Date dataNascimento) {
         this.dataNascimento = dataNascimento;
+    }
+
+    public Long getIdTurma() {
+        return idTurma;
+    }
+
+    public void setIdTurma(Long idTurma) {
+        this.idTurma = idTurma;
     }
 }

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xml:lang="en"
+      lang="en">
+
+<h:head>
+    <title>Cadastro de escola</title>
+    <link rel="stylesheet" href="https://unpkg.com/primeflex@3.1.0/primeflex.css"/>
+</h:head>
+
+<h:body style="margin: 0 !important;">
+    <ui:include src="template/_navbar.xhtml"/>
+    <f:metadata>
+        <f:viewAction action="#{escolaCadastroWebBean.inicializar()}"/>
+    </f:metadata>
+
+    <h:form id="cadastroEscola">
+        <p:messages id="messages" showDetail="true" showIcon="false" showSummary="false" closable="true">
+            <p:autoUpdate/>
+        </p:messages>
+
+        <p:tabView>
+            <p:tab title="Dados cadastrais">
+                <div class="grid">
+                    <div class="col-12">
+                        <div class="col-2">
+                            <p:outputLabel for="nomeEscola" value="Nome da escola: "/>
+                            <p:inputText id="nomeEscola" value="#{escolaCadastroWebBean.escolaDTO.nome}"/>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="col-2">
+                            <p:fieldset id="endereco" legend="Endereço">
+                                <p:outputLabel for="endereco-rua" value="Rua: "/>
+                                <p:inputText id="endereco-rua" value="#{escolaCadastroWebBean.escolaDTO.enderecoDTO.rua}"
+                                             required="true" requiredMessage="#{msg['campo.obrigatorio']}">
+                                    <p:ajax process="@this"/>
+                                </p:inputText>
+
+                                <p:outputLabel for="endereco-numero" value="Número: "/>
+                                <p:inputText id="endereco-numero"
+                                             value="#{escolaCadastroWebBean.escolaDTO.enderecoDTO.numero}"
+                                             required="true" requiredMessage="#{msg['campo.obrigatorio']}">
+                                    <p:ajax process="@this"/>
+                                </p:inputText>
+
+                                <p:outputLabel for="endereco-bairro" value="Bairro: "/>
+                                <p:inputText id="endereco-bairro"
+                                             value="#{escolaCadastroWebBean.escolaDTO.enderecoDTO.bairro}"
+                                             required="true" requiredMessage="#{msg['campo.obrigatorio']}">
+                                    <p:ajax process="@this"/>
+                                </p:inputText>
+
+                                <p:outputLabel for="endereco-cidade" value="Cidade: "/>
+                                <p:inputText id="endereco-cidade"
+                                             value="#{escolaCadastroWebBean.escolaDTO.enderecoDTO.cidade}"
+                                             required="true" requiredMessage="#{msg['campo.obrigatorio']}">
+                                    <p:ajax process="@this"/>
+                                </p:inputText>
+
+                                <p:outputLabel for="endereco-estado" value="Estado: "/>
+                                <p:inputText id="endereco-estado"
+                                             value="#{escolaCadastroWebBean.escolaDTO.enderecoDTO.estado}"
+                                             required="true" requiredMessage="#{msg['campo.obrigatorio']}">
+                                    <p:ajax process="@this"/>
+                                </p:inputText>
+
+                                <p:outputLabel for="endereco-pais" value="País: "/>
+                                <p:inputText id="endereco-pais"
+                                             value="#{escolaCadastroWebBean.escolaDTO.enderecoDTO.pais}"
+                                             required="true" requiredMessage="#{msg['campo.obrigatorio']}">
+                                    <p:ajax process="@this"/>
+                                </p:inputText>
+                            </p:fieldset>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="col-2">
+                            <p:outputLabel for="criacao" value="Data de criação: "/>
+                            <p:calendar id="criacao"
+                                        pattern="dd/MM/yyyy"
+                                        value="#{escolaCadastroWebBean.escolaDTO.criacao}"/>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="col-2">
+                            <p:outputLabel value="Turmas: "/>
+                            <p:selectManyMenu value="#{escolaCadastroWebBean.escolaDTO.turmasIdSelecionadas}"
+                                                showCheckbox="true">
+                                <f:selectItems value="#{escolaCadastroWebBean.turmasEncontradas}"
+                                                var="turma" itemLabel="#{turma.nome}" itemValue="#{turma.idTurma}"/>
+                            </p:selectManyMenu>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="col-2">
+                            <p:commandButton id="botaoCadastrar"
+                                             process="@form"
+                                             value="Cadastrar"
+                                             action="#{escolaCadastroWebBean.cadastrar()}"/>
+                        </div>
+                    </div>
+                </div>
+            </p:tab>
+        </p:tabView>
+    </h:form>
+
+</h:body>
+</html>

@@ -21,6 +21,8 @@ public class TurmaDTO implements Serializable {
 
     private Date dataTermino;
 
+    private Long idEscola;
+
     private List<EstudanteDTO> estudantes = new ArrayList<>();
 
     private int quantidadeEstudantes;
@@ -40,6 +42,7 @@ public class TurmaDTO implements Serializable {
         this.nome = turma.getNome();
         this.dataInicio = turma.getDataInicio();
         this.dataTermino = turma.getDataTermino();
+        this.idEscola = turma.getEscola().getIdEscola();
         this.estudantes = turma.getEstudantes()
                 .stream()
                 .map(EstudanteDTO::new)
@@ -87,6 +90,14 @@ public class TurmaDTO implements Serializable {
 
     public void setDataTermino(Date dataTermino) {
         this.dataTermino = dataTermino;
+    }
+
+    public Long getIdEscola() {
+        return idEscola;
+    }
+
+    public void setIdEscola(Long idEscola) {
+        this.idEscola = idEscola;
     }
 
     public List<EstudanteDTO> getEstudantes() {

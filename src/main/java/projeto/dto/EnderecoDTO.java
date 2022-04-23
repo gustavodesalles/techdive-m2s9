@@ -1,42 +1,36 @@
-package projeto.entity;
+package projeto.dto;
 
-import projeto.dto.EnderecoDTO;
+import projeto.entity.Endereco;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
+public class EnderecoDTO {
 
-@Entity
-public class Endereco {
+    private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue
-    @Column(name = "id_endereco")
     private Long idEndereco;
 
-    @NotNull
     private String rua;
 
-    @NotNull
     private String numero;
 
     private String bairro;
+
     private String cidade;
+
     private String estado;
+
     private String pais;
 
-    public Endereco() {
+    public EnderecoDTO() {
     }
 
-    public Endereco(EnderecoDTO enderecoDTO) {
-        this.rua = enderecoDTO.getRua();
-        this.numero = enderecoDTO.getNumero();
-        this.bairro = enderecoDTO.getBairro();
-        this.cidade = enderecoDTO.getCidade();
-        this.estado = enderecoDTO.getEstado();
-        this.pais = enderecoDTO.getPais();
+    public EnderecoDTO(Endereco endereco) {
+        this.idEndereco = endereco.getIdEndereco();
+        this.rua = endereco.getRua();
+        this.numero = endereco.getNumero();
+        this.bairro = endereco.getBairro();
+        this.cidade = endereco.getCidade();
+        this.estado = endereco.getEstado();
+        this.pais = endereco.getPais();
     }
 
     public Long getIdEndereco() {

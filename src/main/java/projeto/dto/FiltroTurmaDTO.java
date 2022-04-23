@@ -13,6 +13,8 @@ public class FiltroTurmaDTO implements Serializable {
 
     private Long idEstudante;
 
+    private Long idEscola;
+
     private Date dataInicio;
 
     private Date dataTermino;
@@ -39,6 +41,14 @@ public class FiltroTurmaDTO implements Serializable {
 
     public void setIdEstudante(Long idEstudante) {
         this.idEstudante = idEstudante;
+    }
+
+    public Long getIdEscola() {
+        return idEscola;
+    }
+
+    public void setIdEscola(Long idEscola) {
+        this.idEscola = idEscola;
     }
 
     public Date getDataInicio() {

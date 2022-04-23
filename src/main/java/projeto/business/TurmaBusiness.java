@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import projeto.dto.EstudanteDTO;
 import projeto.dto.FiltroTurmaDTO;
 import projeto.dto.TurmaDTO;
+import projeto.entity.Escola;
 import projeto.entity.Estudante;
 import projeto.entity.Turma;
 import projeto.exception.BusinessException;
@@ -58,6 +59,11 @@ public class TurmaBusiness {
             }
         }
 
+        Escola escola = turmaRepository.find(Escola.class, turmaDTO.getIdEscola());
+        if (escola != null) {
+            turma.setEscola(escola);
+        }
+
         if (turma.getIdTurma() != null) {
             turmaRepository.merge(turma);
         } else {
@@ -105,7 +111,8 @@ public class TurmaBusiness {
                 && StringUtils.isBlank(filtro.getNome())
                 && filtro.getIdEstudante() == null
                 && filtro.getDataInicio() == null
-                && filtro.getDataTermino() == null) {
+                && filtro.getDataTermino() == null
+                && filtro.getIdEscola() == null) {
             throw new BusinessException("Insira ao menos um filtro para realizar a busca.");
         }
     }
